@@ -1,0 +1,68 @@
+create database store ;
+use store ;
+create table countries (
+code int primary key ,
+name1 varchar (20) unique ,
+continent_name varchar (20) not null
+
+);
+insert into countries value (1,'ahmed' ,'bb');
+insert into countries value (2,'mhmd' ,'cc');
+UPDATE countries set name1='majid' where code=1;
+select * from countries ;
+
+
+
+ 
+ create table users (
+ id int primary key ,
+ fullname varchar (20) ,
+ email varchar (20) unique  ,
+ gender varchar (1) check(gender= 'm' or gender = 'f') ,
+ date_of_birth varchar (15) ,
+ created_at DAtetime ,
+ country_code int ,
+ foreign key (country_code) references countries (code)
+ );
+ insert into users value (3,'ahmed faris ' ,'bb@f.com','f' ,'1995' , '1995-05-25','2');
+  insert into users value (2,'mhmd faris ' ,'aaa@f.com','f' ,'1995' , '1990-05-25','1');
+ 
+ 
+ create table orders(
+ id int primary key ,
+ user_id int ,
+ status varchar (6) check ( status= 'start' or status = 'finish') ,
+ created_ar datetime ,
+  foreign key (user_id) references users (id)
+ );
+  insert into orders value (1, 5 , 'start',1991-09-19 );
+   insert into orders value (2, 4 , 'start','1991-09-19' );
+  select * from orders ;
+
+ create table order_product (
+ order_id int ,
+ product_id int ,
+ primary key (order_id , product_id) ,
+ quantity  int default 0 ,
+   foreign key (order_id) references orders (id) 
+ );
+  insert into order_product value (1, 5 , 6 );
+   insert into order_product value (6,7,3 );
+
+ALTER TABLE order_product
+ADD Foreign key (product_id) REFERENCES product(id) ;
+ create table products (
+ id int primary key ,
+ name varchar (10) not null ,
+ price int  default 0 ,
+ ststus varchar (10) check ( ststus = 'valid' or ststus = 'expired'),
+ created_at datetime
+ );
+ insert into products value (6,'khalid',300,'valid' ,'1995-03-30' );
+  insert into products value (9,'majd',300,'valid' ,'' );
+  insert into products value (7,'ali',6000,'expired' ,'1999-03-30' );
+select * from products;
+DELETE FROM products WHERE id=6;
+use store ;
+alter table products modify column created_at datetime default current_timestamp on update current_timestamp; 
+ 
